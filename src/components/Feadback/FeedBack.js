@@ -10,27 +10,35 @@ class FeetBack extends Component {
         good: 0,
         neutral: 0,
         bad: 0,
-        visible: false
+        // visible: false
     };
 
-    onClickGood = () => {
-        this.setState({ visible: true })
-        this.setState(prevState => ({
-            good: prevState.good + 1
-        }));
-    };
-    onClickNeutral = () => {
-        this.setState({ visible: true })
-        this.setState(prevState => ({
-            neutral: prevState.neutral + 1
-        }));
-    };
-    onClickBad = () => {
-        this.setState({ visible: true })
-        this.setState(prevState => ({
-            bad: prevState.bad + 1
-        }));
-    };
+    // onClickGood = () => {
+    //     this.setState({ visible: true })
+    //     this.setState(prevState => ({
+    //         good: prevState.good + 1
+    //     }));
+    // };
+    // onClickNeutral = () => {
+    //     this.setState({ visible: true })
+    //     this.setState(prevState => ({
+    //         neutral: prevState.neutral + 1
+    //     }));
+    // };
+    // onClickBad = () => {
+    //     this.setState({ visible: true })
+    //     this.setState(prevState => ({
+    //         bad: prevState.bad + 1
+    //     }));
+    // };
+
+    onLeaveFeedback = (e) => {
+        const name = e.target.name;
+        this.setState((prevState) => ({
+            [name]: prevState[name] + 1,
+        }))
+    }
+
     countTotalFeedback = () => {
         const sum = this.state.good + this.state.neutral + this.state.bad;
         return sum;
@@ -43,22 +51,27 @@ class FeetBack extends Component {
     render() {
         const total = this.countTotalFeedback();
         const percentage = this.countPositiveFeedbackPercentage();
+        const objKey = Object.keys(this.state);
         return (
             <div className={styles.section}>
                 <h1 className={styles.title}>Pleas leave feedback</h1>
                 <FeedbackOptions
-                    onClickGood={this.onClickGood}
-                    onClickNeutral={this.onClickNeutral}
-                    onClickBad={this.onClickBad}
+                    // onClickGood={this.onClickGood}
+                    // onClickNeutral={this.onClickNeutral}
+                    // onClickBad={this.onClickBad}
+                    options={objKey}
+                    onLeaveFeedback={this.onLeaveFeedback}
                 />
 
-                {this.state.visible ? <Statistics
+                {this.countTotalFeedback() === 0 ?
+                    <Notification message="No feedback given" /> :
+                    <Statistics
                     good={this.state.good}
                     neutral={this.state.neutral}
                     bad={this.state.bad}
                     total={total}
                     percentage={percentage}
-                /> : <Notification message="No feedback given" />
+                />
                 }
             </div>
         );
