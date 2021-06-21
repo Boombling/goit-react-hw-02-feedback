@@ -5,7 +5,7 @@ import Notification from '../Message/Notification';
 import styles from './FeedBack.module.css';
 
 
-class FeetBack extends Component {
+class FeedBack extends Component {
     state = {
         good: 0,
         neutral: 0,
@@ -77,4 +77,4 @@ class FeetBack extends Component {
         );
     }
 }
-export default FeetBack;
+export default FeedBack;
